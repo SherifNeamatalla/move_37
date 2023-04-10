@@ -2,6 +2,8 @@ from typing import List
 
 from langchain.agents import Tool
 
+from src.tools.indexing_tools.langchain_indexing_tools import langchain_indexing_tools
+
 
 def indexing_tools_list() -> List[Tool]:
     """Returns a list of indexing tools built upon langchain indexing"""
@@ -9,6 +11,6 @@ def indexing_tools_list() -> List[Tool]:
     """To add a new indexing tool, simply add it to the list below"""""
     result = []
 
-    # result.extend()
+    result.extend(langchain_indexing_tools)
 
     return result
