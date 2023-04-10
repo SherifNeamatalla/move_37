@@ -1,4 +1,5 @@
 from langchain.agents import Tool
+from typing import Union
 
 from src.tools.base_tool import BaseTool
 from src.tools.custom_tools.app_custom_tools_index import custom_tools_list
@@ -43,7 +44,7 @@ def run_tool(tool: dict) -> str:
     return execute(tool, args)
 
 
-def execute(tool: BaseTool | Tool, tool_args: str) -> str:
+def execute(tool: Union[BaseTool, Tool], tool_args: str) -> str:
     # TODO add support for indexing
 
     if isinstance(tool, BaseTool):
