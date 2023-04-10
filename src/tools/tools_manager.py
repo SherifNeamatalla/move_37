@@ -1,6 +1,10 @@
+import json
+import os
+
 from langchain.agents import Tool
 from typing import Union
 
+from src.config.env_loader import load_env
 from src.tools.base_tool import BaseTool
 from src.tools.custom_tools.app_custom_tools_index import custom_tools_list
 from src.tools.huggingface_tools.huggingface_tools_index import huggingface_tools_list
@@ -44,12 +48,16 @@ def run_tool(tool: dict) -> str:
     return execute(tool, args)
 
 
-def execute(tool: Union[BaseTool, Tool], tool_args: str) -> str:
+def execute(tool: Union[BaseTool, Tool], tool_args: dict) -> str:
     # TODO add support for indexing
+    load_env()
+
+    os.getenv("OPENAI_API_KEY")
 
     if isinstance(tool, BaseTool):
-        tool_args.split(',')
         return tool.run(tool_args)
 
     if isinstance(tool, Tool):
-        return tool.run(tool_args)
+        # join values by ,
+        string_tool_args_values = ','.join(tool_args.values())
+        return tool.run(string_tool_args_values)
