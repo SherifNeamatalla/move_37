@@ -2,15 +2,15 @@ import os
 
 import requests
 
+from src.config.constants import FILES_DIR
 from src.tools.tool_annotation import app_tool
-from src.util.storage_loader import GENERATED_DIR
 
 
 @app_tool("Write to File")
 def read_file(filename):
     """Reads a file from the generated directory."""
     try:
-        filepath = safe_join(GENERATED_DIR, filename)
+        filepath = safe_join(FILES_DIR, filename)
         with open(filepath, "r") as f:
             content = f.read()
         return content
@@ -22,7 +22,7 @@ def read_file(filename):
 def download(filename, url):
     """Downloads a file from a URL and saves it in the generated directory."""
     response = requests.get(url)
-    filepath = safe_join(GENERATED_DIR, filename)
+    filepath = safe_join(FILES_DIR, filename)
     with open(filepath, 'wb') as out_file:
         out_file.write(response.content)
     return "File downloaded successfully."
@@ -32,7 +32,7 @@ def download(filename, url):
 def write_to_file(filename, text):
     """Writes text to a file in the generated directory."""
     try:
-        filepath = safe_join(GENERATED_DIR, filename)
+        filepath = safe_join(FILES_DIR, filename)
         directory = os.path.dirname(filepath)
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -47,7 +47,7 @@ def write_to_file(filename, text):
 def append_to_file(filename, text):
     """Appends text to a file in the generated directory."""
     try:
-        filepath = safe_join(GENERATED_DIR, filename)
+        filepath = safe_join(FILES_DIR, filename)
         with open(filepath, "a") as f:
             f.write(text)
         return "Text appended successfully."
@@ -59,7 +59,7 @@ def append_to_file(filename, text):
 def delete_file(filename):
     """Deletes a file from the generated directory."""
     try:
-        filepath = safe_join(GENERATED_DIR, filename)
+        filepath = safe_join(FILES_DIR, filename)
         os.remove(filepath)
         return "File deleted successfully."
     except Exception as e:

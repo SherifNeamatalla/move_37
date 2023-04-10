@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 
 class IDisplayManager(ABC):
@@ -10,5 +11,5 @@ class IDisplayManager(ABC):
         pass
 
     @abstractmethod
-    def prompt(self, text: str):
+    def prompt(self, text: str, tool_name: Optional[str] = None):
         pass

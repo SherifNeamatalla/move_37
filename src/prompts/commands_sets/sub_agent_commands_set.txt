@@ -1,3 +1,0 @@
-COMMANDS:
-
-NO_COMMANDS_AVAILABLE, You have to answer all requests yourself.

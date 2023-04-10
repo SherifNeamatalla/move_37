@@ -1,8 +1,8 @@
-from src.config.constants import BASE_AGENT_V2_TYPE, DEFAULT_TOOLSET_NAME, DEFAULT_MODEL
+from src.config.constants import BASE_AGENT__TYPE, DEFAULT_TOOLSET_NAME, DEFAULT_MODEL
 
 
 class AgentConfig:
-    def __init__(self, agent_type: str = BASE_AGENT_V2_TYPE, model: str = DEFAULT_MODEL, max_tokens: int = 4096,
+    def __init__(self, agent_type: str = BASE_AGENT__TYPE, model: str = DEFAULT_MODEL, max_tokens: int = 4096,
                  temperature: float = 0, autonomous: bool = False, toolset_name: str = DEFAULT_TOOLSET_NAME):
         self.config_map = {
             'type': agent_type,

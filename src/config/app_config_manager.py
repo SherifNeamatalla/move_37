@@ -35,3 +35,7 @@ class AppConfigManager:
     def load(self, agent_id):
         # TODO(3amr) db
         pass
+
+    def list(self):
+        # TODO(3amr) db
+        pass

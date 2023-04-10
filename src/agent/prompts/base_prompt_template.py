@@ -15,7 +15,7 @@ class AppBasePromptTemplate:
 
         prompt = prompt.replace("{role}", kwargs["role"])
 
-        prompt = prompt.replace("{goal}}", json.dumps(kwargs["goals"]))
+        prompt = prompt.replace("{goals}}", json.dumps(kwargs["goals"]))
 
         prompt = prompt.replace("{tools}", json.dumps(kwargs["tools"]))
 

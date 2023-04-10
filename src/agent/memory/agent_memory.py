@@ -40,8 +40,8 @@ class AgentMemory:
     def get_last_system_message(self) -> Optional[str]:
         return self.get_last_message(SYSTEM_ROLE)
 
-    def add_tool_error(self, tool_name: str, error: any):
-        tool_memory_entry = f"Command {tool_name} failed, error:{str(error)}"
+    def add_tool_error(self, error: any):
+        tool_memory_entry = f"Command failed, error:{str(error)}"
 
         self.chat_history.append(create_system_message(tool_memory_entry))
 

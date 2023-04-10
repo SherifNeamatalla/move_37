@@ -1,6 +1,9 @@
 from langchain import GoogleSerperAPIWrapper, WikipediaAPIWrapper
 from langchain.agents import Tool
+import wikipedia
+from src.config.env_loader import load_env
 
+load_env()
 search = GoogleSerperAPIWrapper()
 wikipedia = WikipediaAPIWrapper()
 websearch_tools = [

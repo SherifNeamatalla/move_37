@@ -1,10 +1,14 @@
+from typing import Optional
+
 import openai
 from langchain import PromptTemplate
 
 from src.agent.agent_config import AgentConfig
 from src.agent.memory.agent_memory import AgentMemory
 from src.agent.prompts.base_prompt_template import AppBasePromptTemplate
-from src.prompts.prompt_loader import load_prompt_template
+from src.config.constants import DEFAULT_EMPTY_USER_INPUT_TEMPLATE_NAME, DEFAULT_USER_INPUT_TEMPLATE
+from src.prompts.prompt_loader import load_prompt_template, load_toolset
+from src.util.messages_util import create_system_message
 from src.util.token_util import create_chat_bot_context
 
 
@@ -25,9 +29,12 @@ class Agent:
         self.memory = memory
         self.prompt = AppBasePromptTemplate()
 
-    def chat(self, user_input: str) -> str:
+    def chat(self, user_input: Optional[str] = None) -> str:
         """Chat with the agent, this is the main method of the agent"""
         """This method will be called by the runner as a part of the chat loop"""
+
+        if not user_input:
+            user_input = load_prompt_template(DEFAULT_EMPTY_USER_INPUT_TEMPLATE_NAME)
 
         # This creates relevant context based on user input, this will fetch the relevant context from the short term
         # memory , long term memory and the prompt
@@ -48,9 +55,16 @@ class Agent:
         return agent_response
 
     def create_context(self, user_input: str) -> (str, int):
+        context = [create_system_message(self.prompt.format(
+            name=self.name,
+            role=self.role,
+            goals=self.goals,
+            tools=load_toolset(self.config.get('toolset_name'))
+        ))]
+
         user_input_full_prompt = PromptTemplate(
             input_variables=['user_input'],
-            template=load_prompt_template("user_input_template.txt")
+            template=load_prompt_template(DEFAULT_USER_INPUT_TEMPLATE)
         ).format(user_input=user_input)
 
         return create_chat_bot_context(
@@ -58,6 +72,7 @@ class Agent:
             max_tokens=self.config.get('max_tokens'),
             user_input=user_input_full_prompt,
             full_message_history=self.memory.chat_history,
+            context=context
         )
 
     @staticmethod

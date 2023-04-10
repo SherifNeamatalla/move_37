@@ -11,7 +11,7 @@ from src.tools.langchain_tools.langchain_tool_index import langchain_tools_list
 # Can be: Custom format, similar to langchain but accepts a dict instead of a string
 #         Langchain format
 #         Indexing format, planned to use indexers to search data, prob through a specialised agent
-def use(tool: dict) -> str:
+def run_tool(tool: dict) -> str:
     """Use a tool"""
     if not tool or 'name' not in tool or not tool['name']:
         return 'Error: Missing tool name'
