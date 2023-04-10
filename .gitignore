@@ -1,0 +1,5 @@
+.idea
+/storage/database
+/storage/files
+venv
+.env
