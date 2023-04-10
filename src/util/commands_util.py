@@ -1,4 +1,4 @@
-from src.config.app_config import AppConfig
+from src.config.app_config_manager import AppConfigManager
 from src.config.constants import PERMISSION_DENIED, PERMISSION_GRANTED, MEMORY_COMMAND, WRONG_COMMAND, \
     SNOWFLAKE_COMMAND, \
     USER_COMMAND
@@ -16,7 +16,7 @@ def ask_user_command_permission(agent_name, command):
 
 def execute_user_prompt_command(command_args, command_type):
     if command_type == 'prompt':
-        user_input = AppConfig().display_manager.prompt_user_input(command_args['prompt'])
+        user_input = AppConfigManager().display_manager.prompt(command_args['prompt'])
         return user_input
 
     return None
@@ -29,11 +29,11 @@ def ask_for_permission(name, command, autonomous=False):
         return PERMISSION_GRANTED
 
     if command_name == SNOWFLAKE_COMMAND:
-        user_input = AppConfig().display_manager.prompt_user_input('')
+        user_input = AppConfigManager().display_manager.prompt('')
         return user_input
 
     if not autonomous:
-        command_name, user_input = AppConfig().display_manager.ask_permission(name, command)
+        command_name, user_input = AppConfigManager().display_manager.prompt(name, command)
 
         if user_input == 'n':
             return PERMISSION_DENIED

@@ -5,7 +5,7 @@ import time
 
 
 class Spinner:
-    def __init__(self, message="Loading...", delay=0.1):
+    def __init__(self, message: str = "Loading...", delay: float = 0.1):
         self.spinner = itertools.cycle(['-', '/', '|', '\\'])
         self.delay = delay
         self.message = message

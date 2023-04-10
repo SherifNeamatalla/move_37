@@ -1,24 +1,31 @@
 from abc import ABC, abstractmethod
+from typing import TypeVar
+
+T = TypeVar('T')
 
 
 class IDBManager(ABC):
     @abstractmethod
-    def add(self, name, role, goals, config, long_term_memory, short_term_memory):
+    def add(self, data: str) -> T:
+        """Add a new row to the database"""
         pass
 
     @abstractmethod
-    def delete(self, agent_id):
+    def delete(self, row_id: str) -> T:
+        """Delete a row from the database"""
         pass
 
     @abstractmethod
-    def update(self, agent_id, name=None, role=None, goals=None, config=None, long_term_memory=None,
-               short_term_memory=None):
+    def update(self, row_id: str, data: any) -> T:
+        """Update a row in the database"""
         pass
 
     @abstractmethod
-    def get(self, agent_id):
+    def get(self, row_id: str) -> T:
+        """Get a row from the database"""
         pass
 
     @abstractmethod
-    def list(self):
+    def list(self) -> [T]:
+        """List all rows in the database"""
         pass

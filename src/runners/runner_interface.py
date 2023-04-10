@@ -5,4 +5,5 @@ class IRunner(ABC):
 
     @abstractmethod
     def run(self):
+        """Run the application"""
         pass

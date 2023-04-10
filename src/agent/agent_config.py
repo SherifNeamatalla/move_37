@@ -1,14 +1,9 @@
-import os.path
-
-import yaml
-
 from src.config.constants import BASE_AGENT_V2_TYPE, DEFAULT_TOOLSET_NAME, DEFAULT_MODEL
 
 
 class AgentConfig:
-    def __init__(self, agent_type=BASE_AGENT_V2_TYPE, model=DEFAULT_MODEL, max_tokens=4096, temperature=0,
-                 autonomous=False, toolset_name=DEFAULT_TOOLSET_NAME):
-
+    def __init__(self, agent_type: str = BASE_AGENT_V2_TYPE, model: str = DEFAULT_MODEL, max_tokens: int = 4096,
+                 temperature: float = 0, autonomous: bool = False, toolset_name: str = DEFAULT_TOOLSET_NAME):
         self.config_map = {
             'type': agent_type,
             'model': model,
@@ -18,36 +13,15 @@ class AgentConfig:
             'toolset_name': toolset_name,
         }
 
-    def get(self, key):
+    def get(self, key: str) -> str:
         return self.config_map[key]
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return self.config_map
 
     def __dict__(self):
         return self.config_map
 
     @staticmethod
-    def from_dict(dict_input):
+    def from_dict(dict_input: dict) -> 'AgentConfig':
         return AgentConfig(**dict_input)
-
-    @staticmethod
-    def from_preset(name):
-        path = os.path.join(PRESETS_DIR, name)
-
-        if not os.path.exists(path):
-            raise Exception("Preset file does not exist")
-
-        with open(path, 'r') as stream:
-            try:
-                preset = yaml.safe_load(stream)
-            except yaml.YAMLError as exc:
-                raise Exception("Error loading preset file: " + str(exc))
-
-            config = preset['config']
-
-            name = preset['name']
-            role = preset['role']
-            agent_type = config['type']
-
-            return create_agent_by_type(name, role, config, agent_type)
