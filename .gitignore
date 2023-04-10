@@ -2,4 +2,4 @@
 /storage/database
 /storage/files
 venv
-.env
+/.env
