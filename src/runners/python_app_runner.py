@@ -55,7 +55,7 @@ def use_tool(tool, agent):
     AppConfigManager().display_manager.print(
         f"Using tool {tool_name} with args {tool_args} and type {tool_type}")
 
-    tool_result = run_tool(tool_name)
+    tool_result = run_tool(tool)
 
     AppConfigManager().display_manager.print(f"Command {tool_name},\n Result: {tool_result}")
 
