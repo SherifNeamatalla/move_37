@@ -100,7 +100,6 @@ def execute_action(action_id, payload):
     )
     return session.send(session.prepare_request(request))
 
-
 def get_session() -> Session:
     session = requests.Session()
     session.headers.update(
