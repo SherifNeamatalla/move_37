@@ -1,3 +1,6 @@
-from src.tools.custom_tools.custom_file_tools import file_tools
+from src.tools.single_function_agents.zapier import zapier_agent
 
-file_tools[0].run({"filename": "test.txt", "text": "Hello World!"})
+query = "List me all the events in the next 2 days"
+zapier_agent.run({
+    "query": query,
+})

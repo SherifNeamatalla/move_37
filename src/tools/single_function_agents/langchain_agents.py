@@ -30,5 +30,7 @@ def zapier_agent(query):
     llm = OpenAI(temperature=0)
     zapier = ZapierNLAWrapper()
     toolkit = ZapierToolkit.from_zapier_nla_wrapper(zapier)
+    actions = zapier.list()
+    print(actions)
     agent = initialize_agent(toolkit.get_tools(), llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
     agent.run(query)
