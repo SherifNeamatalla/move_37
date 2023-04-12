@@ -1,11 +1,6 @@
-TOOLS FORMAT:
-{"n":"tool1 name","a":["arg1","arg2"],"d":"Desc for tool1"}
-TOOLS:
-{"n":"Search","a":["query"],"d":"Search for information on google"}
-{"n":"Wiki","a":["query"],"d":"Search for page on wiki"}
-{"n":"Request","a":["query"],"d":"Get a page raw html"}
-{"n":"Run Python","a":["code_string"],"d":"Run python code"}
-{"n":"Weather","a":["city","country"],"d":"Get the current weather, Format has to be City(Full),Country(2 letter code)"}
+NAME|ARGS|DESC
+Search google|"input": "<search>"|Perform a Google search for the given input.
+Communicate|"text": "<text>"| Communicate with user
 
 
 

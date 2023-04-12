@@ -1,3 +1,8 @@
+import os
+
+import yaml
+
+from src.config.constants import AGENTS_DIR
 from src.database.db_manager_interface import IDBManager
 from src.display.display_manager_interface import IDisplayManager
 from src.voice.voice_manager_interface import IVoiceManager
@@ -29,13 +34,29 @@ class AppConfigManager:
         self.voice_manager.say(text)
 
     def save(self, agent):
-        # TODO(3amr) db
-        pass
+        directory = os.path.join(AGENTS_DIR, agent.name)
 
-    def load(self, agent_id):
-        # TODO(3amr) db
-        pass
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
-    def list(self):
-        # TODO(3amr) db
-        pass
+        with open(os.path.join(directory, 'config.yaml'), 'w') as f:
+            yaml.dump(agent.to_dict(), f)
+
+    def load(self, agent_id: str):
+        directory = os.path.join(AGENTS_DIR, agent_id)
+
+        if not os.path.exists(directory):
+            return None
+
+        with open(os.path.join(directory, 'config.yaml'), 'r') as f:
+            agent_dict = yaml.load(f, Loader=yaml.FullLoader)
+
+        return agent_dict
+
+    def list(self) -> [str]:
+        directory = os.path.join(AGENTS_DIR)
+
+        if not os.path.exists(directory):
+            return []
+
+        return os.listdir(directory)

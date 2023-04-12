@@ -57,3 +57,10 @@ class AgentMemory:
     def add_human_feedback(self, user_input: str):
         result = f"Human feedback: {user_input}"
         self.chat_history.append(create_user_message(result))
+
+    def save(self):
+        """This method will save the memory to the database"""
+        messages = []
+
+        for message in self.chat_history:
+            messages.append(f"{message['role']}: {message['content']}")

@@ -6,7 +6,7 @@ FILES_DIR = os.path.join(Path(__file__).parent.parent, "storage", "files")
 PROMPTS_DIR = os.path.join(Path(__file__).parent.parent, "prompts")
 PROMPTS_TEMPLATES_DIR = os.path.join(Path(__file__).parent.parent, "prompts", "templates")
 TOOLSETS_DIR = os.path.join(Path(__file__).parent.parent, "prompts", "toolsets")
-
+AGENTS_DIR = os.path.join(Path(__file__).parent.parent, "storage", "agents")
 ####Roles####
 USER_ROLE = "user"
 SYSTEM_ROLE = "system"

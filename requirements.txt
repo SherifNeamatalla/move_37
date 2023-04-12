@@ -9,3 +9,13 @@ youtube-transcript-api==0.5.0
 pytube
 pyowm
 wolframalpha
+pinecone-client
+matplotlib
+plotly
+pandas
+scipy
+sklearn
+scikit-learn
+google-api-python-client==2.84.0
+duckduckgo-search==2.8.5
+beautifulsoup4~=4.12.2

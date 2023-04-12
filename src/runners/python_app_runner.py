@@ -12,9 +12,7 @@ from src.tools.tools_manager import run_tool
 
 
 def write(thoughts):
-    AppConfigManager().display_manager.print(thoughts['text'])
-
-    AppConfigManager().display_manager.print(thoughts['criticism'])
+    AppConfigManager().display_manager.print(thoughts['summary'])
 
     AppConfigManager().display_manager.print(thoughts['reasoning'])
 
@@ -27,7 +25,7 @@ def speak(thoughts):
 
 
 def plan(thoughts, goals):
-    personal_goals = thoughts['plan'].split('\n')
+    personal_goals = thoughts['goals'].split('\n')
 
     AppConfigManager().display_manager.print(f"Goals:\n{goals},\n Personal goals:\n{goals}")
 
@@ -159,25 +157,25 @@ def load_agent():
     ##TODO load agent
     if load == "y":
         pass
-        # existing_agents = AppConfigManager().list()
-        #
-        # # Show agents and get user input
-        # for i, agent in enumerate(existing_agents):
-        #     print(f"{i}: {agent['name']}")
-        #
-        # agent_index = None
-        #
-        # while agent_index is None or not isinstance(agent_index, int) or int(agent_index) >= len(
-        #         existing_agents) or int(agent_index) < 0:
-        #     try:
-        #         agent_index = int(AppConfigManager().display_manager.prompt(
-        #             "Enter a valid index for an existing agent: "))
-        #     except ValueError:
-        #         agent_index = None
-        #
-        # agent_id = existing_agents[int(agent_index)]['id']
-        #
-        # # agent = load_agent_by_id(agent_id)
+        existing_agents_names = AppConfigManager().list()
+
+        # Show agents and get user input
+        for i, agent_name in enumerate(existing_agents_names):
+            print(f"{i}: {agent_name}")
+
+        agent_index = None
+
+        while agent_index is None or not isinstance(agent_index, int) or int(agent_index) >= len(
+                existing_agents_names) or int(agent_index) < 0:
+            try:
+                agent_index = int(AppConfigManager().display_manager.prompt(
+                    "Enter a valid index for an existing agent: "))
+            except ValueError:
+                agent_index = None
+
+        agent_dict = AppConfigManager().load(existing_agents_names[agent_index])
+
+        agent = Agent.load_from_dict(agent_dict)
 
     else:
         # Get user input to initialize the agent

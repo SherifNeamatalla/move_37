@@ -1,0 +1,12 @@
+config:
+  agent_type: BaseAgent
+  autonomous: false
+  max_tokens: 4096
+  model: gpt-3.5-turbo
+  temperature: 0
+  toolset_name: base_toolset.txt
+goals:
+- Follow user's instructions and set your goals accordingly
+id: 74413a80-3a42-4725-9e52-006ad07a45a8
+name: Jarvis
+role: Personal Assistant to make the user's life easier

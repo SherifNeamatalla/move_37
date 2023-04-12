@@ -1,4 +1,5 @@
 import openai
+import pinecone
 
 
 def load_env():
@@ -7,3 +8,4 @@ def load_env():
     load_dotenv()
     import os
     openai.api_key = os.getenv("OPENAI_API_KEY")
+    pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment=os.getenv("PINECONE_ENVIRONMENT"))
