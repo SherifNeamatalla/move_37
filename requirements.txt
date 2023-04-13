@@ -19,3 +19,6 @@ scikit-learn
 google-api-python-client==2.84.0
 duckduckgo-search==2.8.5
 beautifulsoup4~=4.12.2
+fastapi~=0.95.0
+pydantic~=1.10.7
+starlette~=0.26.1

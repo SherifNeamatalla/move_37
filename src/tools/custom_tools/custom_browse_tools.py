@@ -11,15 +11,17 @@ from src.util.browse import scrape_links, scrape_text, summarize_text
 
 @app_tool("Browse website")
 def execute(url: str, question: str):
+    """Browse a website and return the summary of the text and the first 5 links"""
     return browse_website(url, question)
 
 
 @app_tool("Search google")
-def search(self, cmd_args):
+def search(text):
+    """Search google and return the results"""
     if os.getenv("GOOGLE_API_KEY"):
-        return self.google_official_search(cmd_args["input"])
+        return google_official_search(text)
     else:
-        return self.google_search(cmd_args["input"])
+        return google_search(text)
 
 
 def google_search(query, num_results=8):
@@ -86,3 +88,9 @@ def browse_website(url, question):
     result = f"""Website Content Summary: {summary}\n\nLinks: {links}"""
 
     return result
+
+
+browse_tools = [
+    execute,
+    search
+]

@@ -52,7 +52,7 @@ class AgentMemory:
             tool_memory_entry = f"Command {tool_name} returned: {tool_result}, save important information in " \
                                 f"memory!"
 
-        self.chat_history.append(create_system_message(tool_memory_entry))
+        self.chat_history.append(create_agent_message(tool_memory_entry))
 
     def add_human_feedback(self, user_input: str):
         result = f"Human feedback: {user_input}"

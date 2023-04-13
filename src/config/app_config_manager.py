@@ -1,7 +1,9 @@
+import json
 import os
 
 import yaml
 
+from src.agent.agent import Agent
 from src.config.constants import AGENTS_DIR
 from src.database.db_manager_interface import IDBManager
 from src.display.display_manager_interface import IDisplayManager
@@ -33,14 +35,17 @@ class AppConfigManager:
     def voice(self, text: str):
         self.voice_manager.say(text)
 
-    def save(self, agent):
-        directory = os.path.join(AGENTS_DIR, agent.name)
+    def save(self, agent: Agent):
+        directory = os.path.join(AGENTS_DIR, agent.id)
 
         if not os.path.exists(directory):
             os.makedirs(directory)
 
         with open(os.path.join(directory, 'config.yaml'), 'w') as f:
             yaml.dump(agent.to_dict(), f)
+
+        with open(os.path.join(directory, 'memory.json'), 'w') as f:
+            json.dump(agent.memory.chat_history, f)
 
     def load(self, agent_id: str):
         directory = os.path.join(AGENTS_DIR, agent_id)
@@ -50,6 +55,9 @@ class AppConfigManager:
 
         with open(os.path.join(directory, 'config.yaml'), 'r') as f:
             agent_dict = yaml.load(f, Loader=yaml.FullLoader)
+
+        with open(os.path.join(directory, 'memory.json'), 'r') as f:
+            agent_dict['memory'] = json.load(f)
 
         return agent_dict
 

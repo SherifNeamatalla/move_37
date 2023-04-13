@@ -1,6 +1,6 @@
 NAME|ARGS|DESC
-Search google|"input": "<search>"|Perform a Google search for the given input.
-Communicate|"text": "<text>"| Communicate with user
+Search google|"text": "<text>"|Perform a Google search for the given input.
+None|| Communicate with user through speak field
 
 
 

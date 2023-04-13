@@ -291,14 +291,8 @@ function useAgents({ setLogs }) {
     async function fetchAgents() {
       // Axios response
       const response = await listAgents();
-      const data = response.data;
-      // @ts-ignore
-      const agents = data['result'] as Array<Agent>;
-      // @ts-ignore
-      const logs = data['logs'] as Array<string>;
-      // @ts-ignore
+      const agents = response.data;
       setAgents(agents);
-      setLogs(logs);
     }
 
     fetchAgents();
