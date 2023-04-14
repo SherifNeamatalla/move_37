@@ -15,9 +15,9 @@ class BaseTool:
         self.description = description
         self.kwargs = kwargs
 
-    def run(self, tool_input: str) -> str:
+    def run(self, tool_input: dict) -> str:
         """Use the tool."""
-        return self.func(tool_input)
+        return self.func(**tool_input)
 
     async def arun(self, tool_input: str) -> str:
         """Use the tool asynchronously."""

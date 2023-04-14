@@ -1,12 +1,18 @@
-from langchain.document_loaders import YoutubeLoader
-
-# This named from_youtube_channel but it actually expects a URL
+from langchain.document_loaders import YoutubeLoader, DirectoryLoader
 
 
-def youtube_loader():
-    return YoutubeLoader.from_youtube_channel("https://www.youtube.com/watch?v=QsYGlZkevEg",
+def directory_search(query: str):
+    """Search a directory for a file"""
+    return DirectoryLoader('/Users/sherifneamatalla/Desktop/personal/move_37', glob="**/*.md")
+
+
+def youtube_loader(url: str):
+    """Load info of a youtube video given its URL"""
+    return YoutubeLoader.from_youtube_channel(url,
                                               add_video_info=True)
 
 
-langchain_indexing_tools = [
-]
+loaders_map = {
+    "directory": directory_search,
+    "youtube": youtube_loader,
+}

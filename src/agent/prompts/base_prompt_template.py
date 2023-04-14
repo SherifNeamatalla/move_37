@@ -19,6 +19,14 @@ class AppBasePromptTemplate:
 
         prompt = prompt.replace("{tools}", json.dumps(kwargs["tools"]))
 
+        prompt = prompt.replace("{personal_goals}", kwargs["personal_goals"])
+
+        prompt = prompt.replace("{user_goals}", kwargs["user_goals"])
+
+        prompt = prompt.replace("{summary}", kwargs["summary"])
+
+        prompt = prompt.replace("{context}", kwargs["context"])
+
         return prompt
 
     def _prompt_type(self):

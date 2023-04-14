@@ -1,0 +1,12 @@
+config:
+  autonomous: false
+  max_tokens: 4096
+  model: gpt-3.5-turbo
+  temperature: 0
+  toolset_name: base_toolset.txt
+  agent_type: BaseAgent
+goals:
+- test a tool
+id: 8bc526a2-8355-45cc-947c-7bbbd3b57b07
+name: selftester
+role: you test yourself and your tools

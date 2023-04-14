@@ -12,24 +12,15 @@ from src.tools.tools_manager import run_tool
 
 
 def write(thoughts):
-    AppConfigManager().display_manager.print(thoughts['text'])
+    AppConfigManager().display(thoughts['summary'])
 
-    AppConfigManager().display_manager.print(thoughts['criticism'])
-
-    AppConfigManager().display_manager.print(thoughts['reasoning'])
-
-
-def speak(thoughts):
-    if not AppConfigManager().voice_manager:
-        return
-
-    AppConfigManager().voice_manager.say(thoughts['speak'])
+    AppConfigManager().display(thoughts['reasoning'])
 
 
 def plan(thoughts, goals):
-    personal_goals = thoughts['plan'].split('\n')
+    personal_goals = thoughts['goals'].split('\n')
 
-    AppConfigManager().display_manager.print(f"Goals:\n{goals},\n Personal goals:\n{goals}")
+    AppConfigManager().display(f"Goals:\n{goals},\n Personal goals:\n{goals}")
 
 
 def ask_user_permission(response, agent):
@@ -39,7 +30,7 @@ def ask_user_permission(response, agent):
 
     write(thoughts)
 
-    speak(thoughts)
+    AppConfigManager().voice(thoughts['speak'])
 
     plan(thoughts, agent.goals)
 
@@ -52,12 +43,12 @@ def use_tool(tool, agent):
     tool_name = tool['name']
     tool_args = tool.get('args', [])
     tool_type = tool.get('type', None)
-    AppConfigManager().display_manager.print(
+    AppConfigManager().display(
         f"Using tool {tool_name} with args {tool_args} and type {tool_type}")
 
     tool_result = run_tool(tool)
 
-    AppConfigManager().display_manager.print(f"Command {tool_name},\n Result: {tool_result}")
+    AppConfigManager().display(f"Command {tool_name},\n Result: {tool_result}")
 
     agent.memory.add_tool_result(tool_name, tool_result)
 
@@ -74,7 +65,7 @@ class PythonAppRunner(IRunner):
     def run(self):
         agent = load_agent()
 
-        AppConfigManager().display_manager.print(f"Hello world! I'm {agent.name}!")
+        AppConfigManager().display(f"Hello world! I'm {agent.name}!")
 
         while True:
             with Spinner("Thinking... "):
@@ -91,7 +82,7 @@ class PythonAppRunner(IRunner):
             # This means missing tool or tool name, restart loop so agent can react
             if user_response == MISSING_TOOL or user_response == MISSING_TOOL_NAME:
                 agent.memory.add_tool_error(user_response)
-                AppConfigManager().display_manager.print(user_response)
+                AppConfigManager().display(user_response)
                 continue
 
             # Action denied from user or not accepted, meaning human feedback, again restart loop so agent can react
@@ -104,7 +95,7 @@ class PythonAppRunner(IRunner):
             except Exception as e:
                 agent.memory.add_tool_error(e)
 
-            AppConfigManager().display_manager.print(suggested_tool)
+            AppConfigManager().display(suggested_tool)
 
             AppConfigManager().save(agent)
 
@@ -123,7 +114,7 @@ def ask_user_tool_permission(agent_name, tool):
 
 def ask_for_permission(name, tool, autonomous=False):
     if not autonomous:
-        user_input = AppConfigManager().display_manager.prompt(name, tool)
+        user_input = AppConfigManager().prompt(name, tool)
 
         if user_input == 'n':
             return PERMISSION_DENIED
@@ -147,48 +138,48 @@ def validate_last_response(agent):
     except Exception as e:
         # This error will be shown to agent, maybe agent can react to it
         agent.memory.add_tool_error(JSON_LOADING_ERROR, e)
-        AppConfigManager().display_manager.print(JSON_LOADING_ERROR)
+        AppConfigManager().display(JSON_LOADING_ERROR)
 
         # Return error message, agent will also see this in its short term memory when it acts
         return None
 
 
 def load_agent():
-    load = AppConfigManager().display_manager.prompt("Load agent? (y/n): ")
+    load = AppConfigManager().prompt("Load agent? (y/n): ")
 
     ##TODO load agent
     if load == "y":
         pass
-        # existing_agents = AppConfigManager().list()
-        #
-        # # Show agents and get user input
-        # for i, agent in enumerate(existing_agents):
-        #     print(f"{i}: {agent['name']}")
-        #
-        # agent_index = None
-        #
-        # while agent_index is None or not isinstance(agent_index, int) or int(agent_index) >= len(
-        #         existing_agents) or int(agent_index) < 0:
-        #     try:
-        #         agent_index = int(AppConfigManager().display_manager.prompt(
-        #             "Enter a valid index for an existing agent: "))
-        #     except ValueError:
-        #         agent_index = None
-        #
-        # agent_id = existing_agents[int(agent_index)]['id']
-        #
-        # # agent = load_agent_by_id(agent_id)
+        existing_agents_names = AppConfigManager().list()
+
+        # Show agents and get user input
+        for i, agent_name in enumerate(existing_agents_names):
+            print(f"{i}: {agent_name}")
+
+        agent_index = None
+
+        while agent_index is None or not isinstance(agent_index, int) or int(agent_index) >= len(
+                existing_agents_names) or int(agent_index) < 0:
+            try:
+                agent_index = int(AppConfigManager().prompt(
+                    "Enter a valid index for an existing agent: "))
+            except ValueError:
+                agent_index = None
+
+        agent_dict = AppConfigManager().load(existing_agents_names[agent_index])
+
+        agent = Agent.load_from_dict(agent_dict)
 
     else:
         # Get user input to initialize the agent
-        name = AppConfigManager().display_manager.prompt("Enter the name of the agent: ")
+        name = AppConfigManager().prompt("Enter the name of the agent: ")
 
-        role = AppConfigManager().display_manager.prompt("Enter the role of the agent: ")
+        role = AppConfigManager().prompt("Enter the role of the agent: ")
 
         goals = []
 
         while True:
-            goal = AppConfigManager().display_manager.prompt(
+            goal = AppConfigManager().prompt(
                 "Enter a goal for the agent (leave blank to finish): ")
             if goal == "":
                 break

@@ -2,6 +2,7 @@ from typing import List
 
 from langchain.agents import Tool
 
+from src.tools.langchain_tools.code_tools import code_tools
 from src.tools.langchain_tools.websearch_tools import websearch_tools
 
 
@@ -11,5 +12,6 @@ def langchain_tools_list() -> List[Tool]:
     result = []
 
     result.extend(websearch_tools)
+    result.extend(code_tools)
 
     return result

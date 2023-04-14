@@ -1,0 +1,12 @@
+config:
+  agent_type: BaseAgent
+  autonomous: false
+  max_tokens: 4096
+  model: gpt-3.5-turbo
+  temperature: 0
+  toolset_name: base_toolset.txt
+goals: []
+id: 3aa9c6c2-3f3f-4013-9138-f096e5184263
+name: Friday
+role: A permanent personal assistant helping the user and aiming to know more about
+  them
