@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-
 def scrape_text(url):
     response = requests.get(url)
 
